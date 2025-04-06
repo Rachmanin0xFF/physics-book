@@ -51,23 +51,34 @@ Nonetheless, somehow, a remarkably messy, complicated structure blossomed from t
 #### Emergent System 2: The Logistic Map
 In line with the previous recursive example, please pick a number between (but not including) 0.5 and 1. Now apply the following rule:
 ```
-Your new number = 4 * your number * (1 - your number)
+Your new number = 3.9 * your number * (1 - your number)
 ```
-Starting with 0.7 and applying this rule repeatedly, you'll generate the following sequence:
+I'll pick 0.7 for you (sorry), and apply this rule repeatedly, generating the following sequence:
 ```
-0.7
-0.84
-0.5376
-0.99434496
-0.02249224
-0.08794536
-0.32084391
-0.87161238
-0.44761695
-0.98902407
-0.04342185
+0.819
+0.5781321
+0.9511920
+0.1810607
+0.5782830
+0.9510999
+0.1813847
+0.5790887
+0.9506054
+0.1831236
 ...
 ```
-There is no pattern here. There are *trends*, as you can see in the plot below:
+There is no pattern here. There are recurring *features*, as you can see in the plot below:
 ![[logisticmap_signal.png]]
-But there is no *organization* to these trends. This system is inherently **chaotic**.
+But there is no real *timing* to these features. The system's behavior is erratic, spurious, and unpredictable except by explicitly calling the function itself. We call systems like this **chaotic**. This word means a few different things, but it mostly "hypersensitive to initial conditions"[^1]. In this example, if we had started with 0.701 instead of 0.7, the last number in the list above would've been 0.55 instead of 0.18.
+
+Furthermore, if we squish the plot above into a histogram[^2] by binning it along the vertical axis (and adding a few million more points), we get this distribution:
+![[Pasted image 20250406025804.png]]
+Remember, the equation governing this plot is simply $x\rightarrow 3.9x(1-x)$, and yet this deceptively simple deterministic process was sufficient to produce strikingly erratic behavior.
+
+#### Emergent System 3: Rule 110
+
+
+
+[^1]: Hypersensitivity alone is not sufficient for a chaotic system: $x_{n+1}= 2x_n$ is sensitive to initial conditions, but clearly not chaotic. Other properties, e.g. **toplogical transivity** of the update function, help refine the definition.
+
+[^2]: The more common choice is to plot a bifurcation diagram; a series of histograms for different values of $r$ ($r=3.9$ here) plotted as flush vertical lines with counts interpreted as colors. This is certainly a pretty picture, but perhaps somewhat less interpretable and somewhat more dismissive of the strange jumps and gaps present in the map's histogram.
