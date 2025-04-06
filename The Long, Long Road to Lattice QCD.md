@@ -7,28 +7,28 @@ Yet our stargazing progenitors can't claim a total epistemic victory. Knowing th
 
 Unless, of course, they have a computer.
 ### Accessible Computation
-Teleologically, computational physics refers to strategies for spinning up a 'universe in a box'. While this remarkable power is not necessarily helpful for the *development* of physical theories, it is extraordinarily useful when attempting to *test* them. Atmospheric physics, electrodynamics, chemistry, particle physics, solid state... nearly every branch of physics has seen immense gains through the use of **numerical models**: universes-in-boxes designed to explore the emergent properties of physical theories that would be otherwise impossible to study.
+Teleologically, computational physics refers to strategies for spinning up a 'universe in a box'. While this remarkable power is not necessarily helpful for the *development* of physical theories, it is extraordinarily useful when attempting to *test* them. Atmospheric physics, electrodynamics, chemistry, particle physics, solid state — nearly every branch of physics has seen immense gains through the use of **numerical models**: universes-in-boxes designed to explore the emergent properties of physical theories that would be otherwise impossible to study.
 
-To this day, I am fascinated by these universes-in-boxes. There is a perverse joy in the idea of writing a few lines of code, pressing 'run', and watching your own little universe emerge from it. The most amazing part is that doing this, achieving that satisfaction — it *isn't even that difficult.*
+To this day, I am fascinated by these universes-in-boxes. There is a perverse joy in the idea of writing a few lines of code, pressing 'run', and watching a complex microcosm emerge from it. The most amazing part is that doing this, achieving that satisfaction — it *isn't even that difficult.* Programs exhibiting interesting emergent phenomena are surprisingly dense in Turing-space, and as I'll show in the first chapter, even the simplest of computer programs can generate strikingly complex behavior worth exploring.
 
-Currently, the 'ultimate' of physics, or, specifically the most *fundamental* model we know of, is called **Lattice Quantum Chromodynamics (Lattice QCD)**. I, admittedly, have never written an implementation of lattice QCD, so I will be learning along with the reader. Consequently, this book will be anti-rigorous, painfully pragmatic, and possibly even incorrect at times (though I will do my best to avoid this).
+After that introductory sampling, we'll restrict our attention to the subset of microcosm-generating programs that are decent models of reality: physical simulations. As this guide wanders on, we'll focus less on realistically implementing these models, and focus more on their behavior in the infinite-compute limit (though I'll still provide code wherever possible). To guide our study, we'll work towards the titular, most fundamental model of the universe available to us: **Lattice Quantum Chromodynamics (Lattice QCD)**. I, admittedly, have never written an implementation of lattice QCD, so I will be learning along with the reader. Consequently, this book will be informal, anti-rigorous, painfully pragmatic, and possibly even incorrect at times (though I will do my best to avoid this).
 
 But I don't really care. I'm not writing this for a journal. I'm writing this for my fifteen-year-old self, who had just written a Barnes-Hut N-body simulator and wanted to keep simulating things. I had no one to turn to back then, no resource to tell me "you should try doing this, next". This guide is intended to fill that gap, and hopefully make it so others can cross it in less than a decade.
 
 ## 1. The Joy of Emergent Systems
-I've mentioned that "knowing the rules is not enough", that computers are somehow a necessity for the study of any reasonably complex model. It might not be intuitively clear why this is the case, so I'll take a minute to work through some examples, ascendingly ordered by complexity.
+I've mentioned that "knowing the rules is not enough", that computers are somehow a necessity for the study of any reasonably complex model. It might not be intuitively clear why this is the case, so I'll take a minute to work through some examples (ordered by ascending complexity) where computers reveal a hidden, complex structure hiding in an innocuous ruleset. 
 #### Emergent System 1: L-Systems
-Consider the following rules:
+Consider the following instructions:
 ```
 1. Replace "R" with "RL"
 2. Replace "L" with "R"
 Note: both rules are always applied at the same time.
 ```
-So, for example, if we apply the rules to the word "PARTICLE", we are left with "PARLTICRE". Similarly, "LIAR" becomes "RIARL", and "JAR" becomes "JARL".
+For example, if we apply this procedure to the word "PARTICLE", we are left with "PARLTICRE". Similarly, "LIAR" becomes "RIARL", and "JAR" becomes "JARL".
 
-In isolation, not only is this rule nonsense, it is *boring* nonsense. There is nothing complicated or mysterious about it, and you would be hard-pressed to contrive any interesting intellectual questions from it alone.
+In isolation, not only is this procedure nonsense, it is *boring* nonsense. There is nothing complicated or mysterious about it, and you would be hard-pressed to contrive any interesting intellectual questions from it alone.
 
-But suppose we apply the rule *repeatedly*, starting with just "R":
+But suppose we apply the procedure *repeatedly*, starting with just "R":
 ```
 RL
 RLR
@@ -40,7 +40,7 @@ RLRRLRLRRLRRLRLRRLRLRRLRRLRLRRLRRL
 RLRRLRLRRLRRLRLRRLRLRRLRRLRLRRLRRLRLRRLRLRRLRRLRLRRLRLR
 ...
 ```
-Okay, this is *especially* nonsensical now, but it's a little less boring. The latter strings in the sequence have some sort of pattern, but it's not as straightforward as you might initially assume. Furthermore, look at what happens to the ratio of `R` to `L` as you continue this process:
+Okay, this is *especially* nonsensical now, but it's a little less boring. The latter strings in the sequence have some sort of pattern, but it's not as straightforward as you might initially assume. Furthermore, look at what happens to the ratio of `R` to `L` as this process continues:
 ![[lsystemphi.png]]
 Slowly, the R:L ratio approaches 1.61803... — $\phi$, the "golden ratio". Somehow, this incredibly simple action had an irrational number hidden inside!
 
