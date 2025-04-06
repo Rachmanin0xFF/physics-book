@@ -72,13 +72,25 @@ There is no pattern here. There are recurring *features*, as you can see in the 
 But there is no real *timing* to these features. The system's behavior is erratic, spurious, and unpredictable except by explicitly calling the function itself. We call systems like this **chaotic**. This word means a few different things, but it mostly "hypersensitive to initial conditions"[^1]. In this example, if we had started with 0.701 instead of 0.7, the last number in the list above would've been 0.55 instead of 0.18.
 
 Furthermore, if we squish the plot above into a histogram[^2] by binning it along the vertical axis (and adding a few million more points), we get this distribution:
-![[Pasted image 20250406025804.png]]
-Remember, the equation governing this plot is simply $x\rightarrow 3.9x(1-x)$, and yet this deceptively simple deterministic process was sufficient to produce strikingly erratic behavior.
+![[logisticmap_histogram.png]]
+We can reveal a more beautiful structure by letting our original value, 3.9, vary between 2.5 and 4.0. This results in a spectrum of histograms like the one above, which, when plotted together,[^3] look like this (bin count interpreted as color):
+![[Pasted image 20250406150203.png]]
+This figure is called a **bifurcation diagram**, for the obvious reason.
 
+Remember, the equation governing this plot is simply $x\mapsto rx(1-x)$, and yet this deceptively simple deterministic process was sufficient to produce this strikingly complex and erratic behavior.[^4]
 #### Emergent System 3: Rule 110
+Both examples above study *iterated self-maps*: the first map transformed a string into a string, and the second took a number between 0 and 1 and turned it into a different number between 0 and 1.
+
+Rule 110 is another self-map, operating on the space of infinite binary strings (e.g. ...100101101...). We'll view this space as a sequence of blocks, extending infinitely in both directions, filled in for 1 and empty for 0:
+
+
 
 
 
 [^1]: Hypersensitivity alone is not sufficient for a chaotic system: $x_{n+1}= 2x_n$ is sensitive to initial conditions, but clearly not chaotic. Other properties, e.g. **toplogical transivity** of the update function, help refine the definition.
 
 [^2]: The more common choice is to plot a bifurcation diagram; a series of histograms for different values of $r$ ($r=3.9$ here) plotted as flush vertical lines with counts interpreted as colors. This is certainly a pretty picture, but perhaps somewhat less interpretable and somewhat more dismissive of the strange jumps and gaps present in the map's histogram.
+
+[^3]: If you're having trouble interpreting this figure, the previous histogram (where $r=3.9$) looks like a vertical line on this plot, where the value along the x axis is 3.9.
+
+[^4]: A complex extension of the logistic map yields the Mandelbrot set, an iconic figure in the study of fractals and chaos.
