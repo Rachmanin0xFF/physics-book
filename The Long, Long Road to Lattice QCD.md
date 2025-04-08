@@ -11,7 +11,7 @@ Teleologically, computational physics refers to strategies for spinning up a 'un
 
 To this day, I am fascinated by these universes-in-boxes. There is a perverse joy in the idea of writing a few lines of code, pressing 'run', and watching a complex microcosm emerge from it. The most amazing part is that doing this, achieving that satisfaction — it *isn't even that difficult.* Programs exhibiting interesting emergent phenomena are surprisingly dense in Turing-space, and as I'll show in the first chapter, even the simplest of computer programs can generate strikingly complex behavior worth exploring.
 
-After that introductory sampling, we'll restrict our attention to the subset of microcosm-generating programs that are decent models of reality: physical simulations. As this guide wanders on, we'll focus less on realistically implementing these models, and focus more on their behavior in the infinite-compute limit (though I'll still provide code wherever possible). To guide our study, we'll work towards the titular, most fundamental model of the universe available to us: **Lattice Quantum Chromodynamics (Lattice QCD)**. I, admittedly, have never written an implementation of lattice QCD, so I will be learning along with the reader. Consequently, this book will be informal, anti-rigorous, painfully pragmatic, and possibly even incorrect at times (though I will do my best to avoid this).
+After that introductory sampling, we'll restrict our attention to the subset of microcosm-generating programs that are decent models of reality: physical simulations. As this guide wanders on, we'll focus less on actually implementing these models, and instead explore their theoretical construction in the infinite-compute limit (though I'll still provide code wherever possible). To guide our study, we'll aim for the titular, most fundamental model of the universe available to us: **Lattice Quantum Chromodynamics (Lattice QCD)**. I, admittedly, have never written an implementation of lattice QCD, so I will be learning along with the reader. Consequently, this book will be informal, anti-rigorous, painfully pragmatic, and possibly even incorrect at times (though I will do my best to avoid this).
 
 But I don't really care. I'm not writing this for a journal. I'm writing this for my fifteen-year-old self, who had just written a Barnes-Hut N-body simulator and wanted to keep simulating things. I had no one to turn to back then, no resource to tell me "you should try doing this, next". This guide is intended to fill that gap, and hopefully make it so others can cross it in less than a decade.
 
@@ -85,12 +85,43 @@ Rule 110 is another self-map, operating on the space of infinite binary strings 
 
 
 
+## 2. Discretization
+Aside from its role as a well-studied introductory problem in numerical simulations, ballistics also takes historical precedent as one of the first real jobs computers found themselves employed for. The US military wanted to know how to aim its weapons, and the classic, ideal formulae taught in high schools wasn't sufficient to account for varying atmospheric drag combined with the curvature of our Earth's surface. Without a single, simple equation to use, engineers turned to a long-studied method with renewed computational power:
+
+**Break the problem into little bits, solve the little bits, then put them back together.**
+
+In the warship-gun context, this literally meant splitting the bullet's curved arc into a series of small, straight segments, solving each of those, then piecing them back together again.[^5] I cannot overstate the importance of this strategy. I don't think it's too bold to claim that 90% of modern physical simulations work by breaking their problems into small, 'flat' pieces.
+
+To start, we'll model a friendlier version of the ballistics problem, involving a baseball. This will be an uninteresting example, and you may wish to skip it if you're already familiar with, say, physics engines for video games.
+
+### Discrete Model 1: Baseball
+*Split axis: Time
+Solver: Forward
+
+To model a simple throw, we don't really need numerical simulations. The dragless, uniform-acceleration ballistic equation is good enough for something the size and mass of a baseball:
+$$
+\begin{align}
+v_x&=v_0\cos\theta\\
+v_y&=v_0\sin\theta - gt\\
+r_x&=(v_0\cos\theta)t\\
+r_y&=(v_0\sin\theta)t-\frac{1}{2}gt^2
+\end{align}
+$$
+We can plug our initial angle $\theta$ 
 
 
-[^1]: Hypersensitivity alone is not sufficient for a chaotic system: $x_{n+1}= 2x_n$ is sensitive to initial conditions, but clearly not chaotic. Other properties, e.g. **toplogical transivity** of the update function, help refine the definition.
+
+Discretization is a fundamentally[^6] imperfect process: a digital camera is only as good as its pixel count, and any attempt to break reality into segments — to discretize it — will only be accurate enough if the chosen segments are small enough.
+## ?. Time
+
+[^1]: Hypersensitivity alone is not sufficient for a chaotic system: $x_{n+1}= 2x_n$ is sensitive to initial conditions, but clearly not chaotic. Other properties, e.g. **topological transivity** of the update function, help refine the definition.
 
 [^2]: The more common choice is to plot a bifurcation diagram; a series of histograms for different values of $r$ ($r=3.9$ here) plotted as flush vertical lines with counts interpreted as colors. This is certainly a pretty picture, but perhaps somewhat less interpretable and somewhat more dismissive of the strange jumps and gaps present in the map's histogram.
 
 [^3]: If you're having trouble interpreting this figure, the previous histogram (where $r=3.9$) looks like a vertical line on this plot, where the value along the x axis is 3.9.
 
 [^4]: A complex extension of the logistic map yields the Mandelbrot set, an iconic figure in the study of fractals and chaos.
+
+[^5]: These ballistics simulations were obviously *sequential*, as each segment of the bullet's path depends on the previous one. I'll talk about this distinction at length in the next section.
+
+[^6]: Actually, reality *may* be digital at some small scale; this is an open question in physics. Still, if it is, the digitization scale is inconceivably smaller than scales already-too-small to imagine.
